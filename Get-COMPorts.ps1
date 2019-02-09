@@ -1,0 +1,1 @@
+﻿ [System.IO.Ports.SerialPort]::getportnames()
