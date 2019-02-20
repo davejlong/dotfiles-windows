@@ -12,5 +12,5 @@ function Connect-Office365 {
         $Office365Credential = Get-Credential -Message "Office365 Credentials"
     }
     $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell -Credential $Office365Credential -Authentication Basic -AllowRedirection
-    Import-PSSession $Session -DisableNameChecking
+    Import-PSSession $Session -DisableNameChecking -AllowClobber
 }

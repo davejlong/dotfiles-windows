@@ -28,7 +28,7 @@ function Get-Office365Report {
   #Logo that will be on the right side, UNC or URL
   $RightLogo = "https://thelazyadministrator.com/wp-content/uploads/2018/06/amd.png"
   #Location the report will be saved to
-  $ReportSavePath = "C:\Automation\"
+  $ReportSavePath = Join-Path -Path $env:HOMEPATH -ChildPath "Downloads"
   #Variable to filter licenses out, in current state will only get licenses with a count less than 9,000 this will help filter free/trial licenses
   $LicenseFilter = "9000"
   #If you want to include users last logon mailbox timestamp, set this to true
