@@ -1,4 +1,16 @@
-﻿function Generate-TemporaryPassword {
+﻿<#
+ .Synopsis
+  Generates a password similar to Office 365 password generator.
+
+ .Description
+  Generates a password similar to Office 365 password generator. Useful for
+  setting temporary passwords.
+
+ .Example
+    # Get a random password
+    Get-RandomPassword
+#>
+function Get-RandomPassword {
   $Consonents = 'B','C','D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Z'
   $Vowels = 'A','E','I','O','U','Y'
 
