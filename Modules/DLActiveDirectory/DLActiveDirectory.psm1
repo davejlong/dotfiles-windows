@@ -4,5 +4,4 @@ Get-ChildItem -Path $ModuleRoot -Filter *.ps1 | ForEach-Object {
   . $_.FullName
 }
 
-Export-ModuleMember -Function Get-RandomPassword
-Export-ModuleMember -Function ConvertTo-ExcelToCsv
+Export-ModuleMember -Function Get-ADReport
