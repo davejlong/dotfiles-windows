@@ -1,10 +1,11 @@
 $Modules = @(
   "Posh-Git",
-  "ReportHTML",
-  "AzureAD",
-  "UniversalDashboard",
-  "AzureRM"
+  "PSAtera",
+  "AzureAD"
 )
 foreach ($module in $Modules) {
-  Install-Module -Force -AllowClobber -Name $module
+  Install-Module -Name $module -Scope CurrentUser -Force -AllowClobber
 }
+
+# Run the rest as admin
+Start-Process -Verb RunAs powershell.exe -Args "-executionpolicy bypass -command Set-location \`"$PWD\`"; .\install-admin.ps1"
