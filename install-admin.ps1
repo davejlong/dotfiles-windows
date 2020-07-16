@@ -16,6 +16,7 @@ $cinst = Join-Path -Path $env:ProgramData -ChildPath "chocolatey\bin\cinst.exe"
   "openssh",
   "powertoys",
   "putty.install",
+  "spotify",
   "steam",
   "sysinternals",
   "vlc",
