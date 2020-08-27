@@ -1,7 +1,10 @@
 $Modules = @(
   "Posh-Git",
   "PSAtera",
-  "AzureAD"
+  "AzureAD",
+  "MSOnline",
+  "Microsoft.Online.SharePoint.PowerShell",
+  "MicrosoftTeams"
 )
 foreach ($module in $Modules) {
   Install-Module -Name $module -Scope CurrentUser -Force -AllowClobber

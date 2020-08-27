@@ -19,10 +19,11 @@ $cinst = Join-Path -Path $env:ProgramData -ChildPath "chocolatey\bin\cinst.exe"
   "spotify",
   "steam",
   "sysinternals",
+  "tftpd32",
   "vlc",
   "vscode",
   "wireshark"
-) | ForEach-Object { & cinst --yes $_ }
+) | ForEach-Object { & $cinst --yes $_ }
 
 @(
   "Microsoft-Windows-Subsystem-Linux",
