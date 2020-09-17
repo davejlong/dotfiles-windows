@@ -4,7 +4,8 @@ $Modules = @(
   "AzureAD",
   "MSOnline",
   "Microsoft.Online.SharePoint.PowerShell",
-  "MicrosoftTeams"
+  "MicrosoftTeams",
+  "psake"
 )
 foreach ($module in $Modules) {
   Install-Module -Name $module -Scope CurrentUser -Force -AllowClobber
