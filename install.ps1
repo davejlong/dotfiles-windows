@@ -5,7 +5,8 @@ $Modules = @(
   "MSOnline",
   "Microsoft.Online.SharePoint.PowerShell",
   "MicrosoftTeams",
-  "psake"
+  "psake",
+  "Oh-My-Posh"
 )
 foreach ($module in $Modules) {
   Install-Module -Name $module -Scope CurrentUser -Force -AllowClobber

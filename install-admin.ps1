@@ -7,6 +7,7 @@ $cinst = Join-Path -Path $env:ProgramData -ChildPath "chocolatey\bin\cinst.exe"
   "Cmder",
   "discord",
   "dropbox",
+  "explorerplusplus",
   "firefox",
   "git",
   "neovim",
