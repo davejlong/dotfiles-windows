@@ -13,4 +13,17 @@ foreach ($module in $Modules) {
 }
 
 # Run the rest as admin
-Start-Process -Verb RunAs powershell.exe -Args "-executionpolicy bypass -command Set-location \`"$PWD\`"; .\install-admin.ps1"
+Start-Process -Verb RunAs -Wait powershell.exe -Args "-executionpolicy bypass -command Set-location \`"$PWD\`"; .\install-admin.ps1"
+
+$code = Join-Path $env:ProgramFiles "Microsoft VS Code/code"
+if (Test-Path $code) {
+  # PowerShell Code Plugin
+  Install-Script Install-VSCode -Scope CurrentUser; Install-VSCode.ps1
+  @(
+    "vscode.vim",
+    "slevesque.vscode-autohotkey",
+    "yzhang.markdown-all-in-one",
+    "ms-vscode-remote.remote-wsl",
+    "ms-vscode.theme-tomorrowkit"
+  ) | ForEach-Object { $code --install-extension $_ }
+}
