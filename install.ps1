@@ -1,3 +1,8 @@
+if ($PSVersionTable.PSVersion.Major -lt 7) {
+  Write-Error "Dotfiles expect to be installed with PowerShell 7 or greater."
+  exit
+}
+
 $DotfilesRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 ###

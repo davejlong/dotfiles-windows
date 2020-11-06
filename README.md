@@ -19,3 +19,5 @@ The install script runs through a number of processes:
 4. Install VSCode extensions that I use
 5. Copy to the default PowerShell Profile a script that loads all of my profile when I start PowerShell
 6. Install Powerline Fonts that I use in my shell
+
+> As a note, since I use OneDrive with folder redirection for my Documents, I cannot store the repository in the default Documents\WindowsPowershell folder or else OneDrive gets mad at me, so I store the folder at ~/.dotfiles.
