@@ -1,0 +1,1 @@
+. <<DOTFILES_ROOT>>/profile.ps1
