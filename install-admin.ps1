@@ -32,3 +32,9 @@ $cinst = Join-Path -Path $env:ProgramData -ChildPath "chocolatey\bin\cinst.exe"
   "Microsoft-Hyper-V-Tools-All",
   "TelnetClient"
 ) | ForEach-Object { Enable-WindowsOptionalFeature -FeatureName $_ -Online -NoRestart -All }
+
+###
+# Setup Nvim config
+###
+New-Item -ItemType Directory -Path "$env:LOCALAPPDATA/nvim"
+New-Item -ItemType SymbolicLink -Path "$env:LOCALAPPDATA/nvim/init.vim" -Target "$PWD/nvim/init.vim"
