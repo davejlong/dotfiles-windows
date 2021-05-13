@@ -1,9 +1,11 @@
-if ($PSVersionTable.PSVersion.Major -lt 7) {
-  Write-Error "Dotfiles expect to be installed with PowerShell 7 or greater."
-  exit
-}
+# if ($PSVersionTable.PSVersion.Major -lt 7) {
+#   Write-Error "Dotfiles expect to be installed with PowerShell 7 or greater."
+#   exit
+# }
 
 $DotfilesRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+
+& (Join-Path $DotfilesRoot "fonts/install.ps1")
 
 ###
 # Install all the nice modules I use
@@ -56,3 +58,14 @@ git clone https://github.com/powerline/fonts.git
 Set-Location fonts
 Start-Process -Wait pwsh.exe -Args "-executionpolicy bypass -command .\install.ps1"
 Set-Location $DotfilesRoot
+
+###
+# Install all AutoHotkey Startup scripts
+###
+$Startup = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup"
+$WshShell = New-Object -ComObject WScript.Shell
+Get-ChildItem -Path ahk -Filter *.autostart.ahk | ForEach-Object {
+  $Shortcut = $WshShell.CreateShortcut("$Startup\$($_.Name).lnk")
+  $Shortcut.TargetPath = $_.FullName
+  $Shortcut.Save()
+}

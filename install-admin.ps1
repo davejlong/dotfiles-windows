@@ -4,6 +4,7 @@ $cinst = Join-Path -Path $env:ProgramData -ChildPath "chocolatey\bin\cinst.exe"
 
 @(
   "7zip",
+  "autohotkey",
   "Cmder",
   "discord",
   "dropbox",
