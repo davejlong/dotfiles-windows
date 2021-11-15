@@ -64,7 +64,7 @@ Set-Location $DotfilesRoot
 ###
 $Startup = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup"
 $WshShell = New-Object -ComObject WScript.Shell
-Get-ChildItem -Path ahk -Filter *.autostart.ahk | ForEach-Object {
+Get-ChildItem -Path ahk -Filter *.ahk | ForEach-Object {
   $Shortcut = $WshShell.CreateShortcut("$Startup\$($_.Name).lnk")
   $Shortcut.TargetPath = $_.FullName
   $Shortcut.Save()

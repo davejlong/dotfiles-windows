@@ -26,14 +26,16 @@ function Find-COMPort {
   # Get a list of the local USB COM serial ports
   $Query = 'Service like "%ser%" AND PNPClass = "Ports" AND DeviceID like "USB%"'
   $Ports = Get-CimInstance win32_pnpentity -Filter $Query
-  # Try to find a USB Serial Device
+  
+  # Try to find a Serial Device
   $Port = $Ports
   if ($Ports.count -gt 1) {
     $Port = Read-SerialPortFromUser -Ports $Ports
   }
   $Port.Name -match "\((?<COMPort>COM\d+)\)" | Out-Null
-  
-  return $Matches["COMPort"]
+  $PortMatches = $Matches
+  if ($PortMatches -eq $null) { return "COM1" }
+  else { return $PortMatches["COMPort"] }
 }
 
 function Read-SerialPortFromUser($ports) {

@@ -10,5 +10,5 @@ $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
-Set-Theme AgnosterPlus
+Set-Theme robbyrussell
 Set-Prompt
