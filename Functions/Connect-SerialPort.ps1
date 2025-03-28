@@ -19,7 +19,7 @@ function Connect-SerialPort {
   Write-Host "Parity: $Parity"
   Write-Host "Flow Control: $FlowControl"
 
-  & plink.exe -serial $COMPort -sercfg $BaudRate,$DataBits,$StopBits,$Parity,$FlowControl
+  & plink.exe -serial $COMPort -sercfg "$BaudRate,$DataBits,$StopBits,$Parity,$FlowControl"
 }
 
 function Find-COMPort {
