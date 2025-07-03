@@ -13,6 +13,8 @@ WhatsApp.WhatsApp
 # Tools
 7zip.7zip
 AutoHotkey.AutoHotkey
+Bitwarden.Bitwarden
+Bitwarden.CLI
 BornToBeRoot.NETworkManager
 CPUID.CPU-Z
 gerardog.gsudo
