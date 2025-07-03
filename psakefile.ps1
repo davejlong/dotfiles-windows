@@ -43,4 +43,17 @@ Task AHKScripts {
   
 }
 
-Task default -depends Apps,PSModules,VSCodeExtensions,AHKScripts
+Task InstallProfile {
+  $ProfilePaths = @(
+    'PowerShell\Microsoft.VSCode_profile.ps1',
+    'PowerShell\Microsoft.PowerShell_profile.ps1',
+    'WindowsPowerShell\Microsoft.PowerShell_profile.ps1'
+  )
+  $Documents = [System.Environment]::GetFolderPath('MyDocuments')
+  $DotfilesProfile = Join-Path -Path "$PWD" -ChildPath "profile.ps1"
+  foreach($ProfilePath in $ProfilePaths) {
+    Add-Content -Path (Join-Path -Path "$Documents" -ChildPath "$ProfilePath") -Value ". $DotfilesProfile"
+  }
+}
+
+Task default -depends Apps,PSModules,VSCodeExtensions,AHKScripts,InstallProfile
