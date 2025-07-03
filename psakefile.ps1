@@ -45,6 +45,8 @@ Task Nvim {
     New-Item -Path $NvimConfigPath -ItemType Directory
   }
 
+  Invoke-NeovimPlugInstall
+
   if (Get-IsAdmin) {
     New-Item -Path "$NvimConfigPath/init.vim" -ItemType SymbolicLink -Value $PWD/nvim/init.vim
   } else {
