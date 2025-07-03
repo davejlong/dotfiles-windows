@@ -51,6 +51,7 @@ Task Nvim {
     New-Item -Path "$NvimConfigPath/init.vim" -ItemType SymbolicLink -Value $PWD/nvim/init.vim
   } else {
     Invoke-TaskAsAdmin -TaskName "Nvim"
+    Write-Host "Don't forget to launch Neovim and run ':PlugInstall'"
   }
 }
 
