@@ -39,8 +39,23 @@ Task VSCodeExtensions -PreCondition { Get-Command "code" } {
   }
 }
 
-Task AHKScripts {
-  
+Task Nvim {
+  $NvimConfigPath = Join-Path -Path $env:LOCALAPPDATA -ChildPath "nvim"
+  if (!(Test-Path -Path $NvimConfigPath)) {
+    New-Item -Path $NvimConfigPath -ItemType Directory
+  }
+
+  if (Get-IsAdmin) {
+    New-Item -Path "$NvimConfigPath/init.vim" -ItemType SymbolicLink -Value $PWD/nvim/init.vim
+  } else {
+    Invoke-TaskAsAdmin -TaskName "Nvim"
+  }
+}
+
+Task AHK {
+  Get-ChildItem -Path ahk -Filter *.ahk | ForEach-Object {
+    New-StartupShortcut -TargetPath $_
+  }
 }
 
 Task InstallProfile {

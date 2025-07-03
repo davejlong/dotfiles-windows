@@ -15,6 +15,7 @@ WhatsApp.WhatsApp
 AutoHotkey.AutoHotkey
 BornToBeRoot.NETworkManager
 CPUID.CPU-Z
+gerardog.gsudo
 Git.Git
 Insecure.Nmap
 Microsoft.PowerShell
