@@ -23,9 +23,12 @@ Microsoft.Sysinternals.Autoruns
 Microsoft.Sysinternals.ProcessExplorer
 Microsoft.Sysinternals.ProcessMonitor
 Microsoft.VisualStudioCode
+Mobatek.MobaXterm
 Neovim.Neovim
 Ookla.Speedtest
+SonicWall.NetExtender
 Splashtop.SplashtopBusiness
+Starship.Starship
 WiresharkFoundation.Wireshark
 
 # Gaming
