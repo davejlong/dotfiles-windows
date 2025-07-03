@@ -1,0 +1,9 @@
+antyos.openscad
+esbenp.prettier-vscode
+justin-grote.powershell-extension-pack
+ms-vscode.powershell
+ms-vscode.theme-tomorrowkit
+ms-vscode-remote.remote-wsl
+slevesque.vscode-autohotkey
+vscodevim.vim,
+yzhang.markdown-all-in-one

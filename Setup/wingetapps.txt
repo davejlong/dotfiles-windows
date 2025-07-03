@@ -1,0 +1,38 @@
+# Media
+Spotify.Spotify
+VideoLAN.VLC
+
+# Productivity
+Microsoft.Office
+
+# Communication
+Discord.Discord
+SlackTechnologies.Slack
+WhatsApp.WhatsApp
+
+# Tools
+7zip.7zip
+AutoHotkey.AutoHotkey
+BornToBeRoot.NETworkManager
+CPUID.CPU-Z
+Git.Git
+Insecure.Nmap
+Microsoft.PowerShell
+Microsoft.PowerToys
+Microsoft.Sysinternals.Autoruns
+Microsoft.Sysinternals.ProcessExplorer
+Microsoft.Sysinternals.ProcessMonitor
+Microsoft.VisualStudioCode
+Neovim.Neovim
+Ookla.Speedtest
+Splashtop.SplashtopBusiness
+WiresharkFoundation.Wireshark
+
+# Gaming
+EpicGames.EpicGamesLauncher
+Valve.Steam
+
+# 3D Printing
+OpenSCAD.OpenSCAD
+PTRTECH.UVtools
+SoftFever.OrcaSlicer

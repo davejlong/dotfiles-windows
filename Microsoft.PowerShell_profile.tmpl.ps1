@@ -1,3 +1,2 @@
-$MyDocuments = [Environment]::GetFolderPath("MyDocuments")
-$DotFilesPath = Join-Path -Path $MyDocuments -ChildPath "Code/dotfiles"
-. "$DotFilesPath/profile.ps1" 
+$DotFilesPath = Join-Path -Path $HOME -ChildPath "source/repos/davejlong/dotfiles"
+. "$DotFilesPath\profile.ps1"

@@ -6,8 +6,7 @@ $DotfilesRoot = Split-Path -Parent $InstallerRoot
 ###
 
 $Apps = @(
-  "Mozilla.Firefox"
-  "Spotify.Sportify"
+  "Spotify.Spotify"
   "VideoLAN.VLC"
   "9NMPJ99VJBWV" # Phone Link
 
@@ -16,14 +15,11 @@ $Apps = @(
   "AutoHotkey.AutoHotkey"
   "CPUID.CPU-Z"
   "Git.Git"
-  "JanDeDobbeleer.OhMyPosh"
   "Microsoft.PowerToys"
   "Ookla.Speedtest"
 
   # Productivity
-  "Dropbox.Dropbox"
   "Microsoft.Office"
-  "XPDLPKWG9SW2WD" # Adobe Creative Cloud
 
   # Communication
   "Discord.Discord"
@@ -48,8 +44,8 @@ $Apps = @(
 
   # 3D Printing
   "OpenSCAD.OpenSCAD"
-  "Prusa3D.PrusaSlicer"
   "PTRTECH.UVtools"
+  "SoftFever.OrcaSlicer"
 )
 
 $Apps | ForEach-Object {
@@ -68,8 +64,7 @@ $Modules = @(
   "AzureAD"
   "Microsoft.Online.SharePoint.PowerShell"
   "MicrosoftTeams"
-  "MSOnline"
-  "Posh-Git"
+  "Microsoft.Graph"
   "psake"
 )
 foreach ($module in $Modules) {
