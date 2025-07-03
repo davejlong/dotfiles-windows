@@ -1,7 +1,15 @@
-function IsAdmin() {
+function Get-IsAdmin() {
   (
     [Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
   ).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+function Get-PSMajorVersion() {
+  $PSVersionTable.PSVersion.Major
+}
+
+function Invoke-TaskAsAdmin($TaskName) {
+  Start-Process -Wait -PassThru -Verb runas -FilePath "pwsh" -WorkingDirectory "." -ArgumentList '-Command', "Invoke-psake -taskList $TaskName"
 }
 
 function Invoke-WinGetInstall([string]$App) {
@@ -24,5 +32,3 @@ function Invoke-VSCodeExtInstall($Ext) {
   }
   Start-Process @ProcessDef
 }
-
-Export-ModuleMember -Function Execute-WinGetInstall, IsAdmin
