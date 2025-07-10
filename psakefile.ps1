@@ -1,14 +1,17 @@
 Include ./Setup/Helpers.ps1
 
-Task RequirePS7 {
+Task IsPS7 {
   Assert (Get-PSMajorVersion -ge 7) "Task requires PowerShell 7+"
 }
 
-Task RequireAdmin {
+Task IsAdmin {
   Assert Get-IsAdmin "Task requires admin"
 }
 
-Task Apps {
+###
+# Winget Apps
+###
+Task WingetInstall {
   $Apps = Get-Content "setup/wingetapps.txt"
 
   foreach($App in $Apps) {
@@ -17,20 +20,49 @@ Task Apps {
   }
 }
 
-Task PSModules -Depends RequirePS7 {
-  if (Get-IsAdmin) {
-    $Mods = Get-Content "setup/psmodules.txt"
+###
+# PowerShell setup
+###
+Task PSModules -Depends IsPS7,IsAdmin {
+  # Installs modules to all users because PowerShell still doesn't have a way to store modules
+  # outside of the MyDocuments folder which gets screwed up when MyDocuments points to a
+  # OneDrive folder syncing with other computers.
+  $Mods = Get-Content "setup/psmodules.txt"
+  $InstalledMods = Get-Module -ListAvailable
+  $PSGallery = Get-PSRepository -Name PSGallery
+  Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
-    foreach($Mod in $Mods) {
-      if ($Mod -like "#*" -or $Mod -eq "") { continue; }
-      Install-Module -Scope AllUsers -Name $Mod -AcceptLicense
+  foreach($Mod in $Mods) {
+    if ($Mod -like "#*" -or $Mod -eq "") { continue; }
+    if ($InstalledMods.Name -contains $Mod) {
+      Update-Module -Name $Mod -AcceptLicense
     }
-  } else {
-    Invoke-TaskAsAdmin -TaskName "PSModules"
+    Install-Module -Name $Mod -Scope AllUsers -AcceptLicense
+  }
+
+  Set-PSRepository -Name PSGallery -InstallationPolicy $PSGallery.InstallationPolicy
+}
+
+Task PowerShell {
+  $ProfilePaths = @(
+    'PowerShell\Microsoft.VSCode_profile.ps1',
+    'PowerShell\Microsoft.PowerShell_profile.ps1',
+    'WindowsPowerShell\Microsoft.PowerShell_profile.ps1'
+  )
+  $Documents = [System.Environment]::GetFolderPath('MyDocuments')
+  $DotfilesProfile = Join-Path -Path "$PWD" -ChildPath "powershell/profile.ps1"
+
+  New-Item -Path (Join-Path -Path "$Documents" -ChildPath "PowerShell") -ItemType Directory -ErrorAction SilentlyContinue
+  New-Item -Path (Join-Path -Path "$Documents" -ChildPath "WindowsPowerShell") -ItemType Directory -ErrorAction SilentlyContinue
+  foreach($ProfilePath in $ProfilePaths) {
+    Add-Content -Path (Join-Path -Path "$Documents" -ChildPath "$ProfilePath") -Value ". $DotfilesProfile"
   }
 }
 
-Task VSCodeExtensions -PreCondition { Get-Command "code" } {
+###
+# VSCode Setup
+###
+Task VSCode -PreCondition { Get-Command "code" } {
   $Extensions = Get-Content "setup/vscodeextensions.txt"
 
   foreach($Extension in $Extensions) {
@@ -39,39 +71,46 @@ Task VSCodeExtensions -PreCondition { Get-Command "code" } {
   }
 }
 
-Task Nvim {
-  $NvimConfigPath = Join-Path -Path $env:LOCALAPPDATA -ChildPath "nvim"
-  if (!(Test-Path -Path $NvimConfigPath)) {
-    New-Item -Path $NvimConfigPath -ItemType Directory
-  }
-
+###
+# Neovim Setup
+###
+Task _NvimPluggedInstall {
   Invoke-NeovimPlugInstall
-
-  if (Get-IsAdmin) {
-    New-Item -Path "$NvimConfigPath/init.vim" -ItemType SymbolicLink -Value $PWD/nvim/init.vim
-  } else {
-    Invoke-TaskAsAdmin -TaskName "Nvim"
-    Write-Host "Don't forget to launch Neovim and run ':PlugInstall'"
-  }
 }
 
+Task _NvimPlugInstall {
+  Exec { nvim --headless -c 'PlugInstall' -c 'q' -c 'q' }
+}
+
+Task _NvimInit {
+  $VimConfig = @"
+package.path = package.path .. ";$($PWD -replace '\\', '/')/nvim/init.lua"
+require('nvim')
+"@
+  Set-Content -Path "$env:LOCALAPPDATA/nvim/init.lua" -Value $VimConfig
+}
+
+Task Neovim -Depends _NvimInit,_NvimPluggedInstall,_NvimPlugInstall
+
+###
+# Autohotkey shortcuts
+###
 Task AHK {
   Get-ChildItem -Path ahk -Filter *.ahk | ForEach-Object {
     New-StartupShortcut -TargetPath $_
   }
 }
 
-Task InstallProfile {
-  $ProfilePaths = @(
-    'PowerShell\Microsoft.VSCode_profile.ps1',
-    'PowerShell\Microsoft.PowerShell_profile.ps1',
-    'WindowsPowerShell\Microsoft.PowerShell_profile.ps1'
-  )
-  $Documents = [System.Environment]::GetFolderPath('MyDocuments')
-  $DotfilesProfile = Join-Path -Path "$PWD" -ChildPath "profile.ps1"
-  foreach($ProfilePath in $ProfilePaths) {
-    Add-Content -Path (Join-Path -Path "$Documents" -ChildPath "$ProfilePath") -Value ". $DotfilesProfile"
-  }
+###
+# Git
+###
+Task Git {
+  $GitConfig = @"
+[include]
+  path = $($PWD -replace '\\', '/')/git/gitconfig
+"@
+  Add-Content -Path ~/.gitconfig -Value $GitConfig
 }
 
-Task default -depends Apps,PSModules,VSCodeExtensions,AHKScripts,InstallProfile
+Task default -Depends WingetInstall, Neovim, PowerShell, VSCode, AHK, Git
+Task AdminInstall -Depends PSModules
