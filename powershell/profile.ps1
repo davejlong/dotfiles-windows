@@ -1,5 +1,7 @@
 Invoke-Expression (&starship init powershell)
 
+Import-Module "$PSScriptRoot\Helpers.psm1" -Force
+
 # PowerToys Command Not Found
 if (Get-Module -ListAvailable Microsoft.WinGet.CommandNotFound) {
   Import-Module -Name Microsoft.WinGet.CommandNotFound
@@ -15,4 +17,4 @@ if (Get-Module -ListAvailable -Name SyncroRMM) {
   if ($env:SYNCRO_API_KEY) { Set-SyncroApiKey -ApiKey $env:SYNCRO_API_KEY }
 }
 
-Invoke-WebRequest -Uri "http://wttr.in/hvn?0" | Select-Object -ExpandProperty Content
+Get-CurrentWeather
