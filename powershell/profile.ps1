@@ -14,3 +14,5 @@ if (Get-Module -ListAvailable -Name SyncroRMM) {
   if ($env:SYNCRO_SUBDOMAIN) { Set-SyncroSubdomain -Subdomain $env:SYNCRO_SUBDOMAIN }
   if ($env:SYNCRO_API_KEY) { Set-SyncroApiKey -ApiKey $env:SYNCRO_API_KEY }
 }
+
+Invoke-WebRequest -Uri "http://wttr.in/hvn?0" | Select-Object -ExpandProperty Content
