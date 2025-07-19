@@ -17,4 +17,4 @@ if (Get-Module -ListAvailable -Name SyncroRMM) {
   if ($env:SYNCRO_API_KEY) { Set-SyncroApiKey -ApiKey $env:SYNCRO_API_KEY }
 }
 
-Get-CurrentWeather
+# Get-CurrentWeather
