@@ -1,3 +1,12 @@
+properties {
+  $NvimConfigDir = "$env:LOCALAPPDATA/nvim"
+  $ProfilePaths = @(
+    'PowerShell\Microsoft.VSCode_profile.ps1',
+    'PowerShell\Microsoft.PowerShell_profile.ps1',
+    'WindowsPowerShell\Microsoft.PowerShell_profile.ps1'
+  )
+}
+
 Include ./Setup/Helpers.ps1
 
 Task IsPS7 {
@@ -44,11 +53,6 @@ Task PSModules -Depends IsPS7,IsAdmin {
 }
 
 Task PowerShell {
-  $ProfilePaths = @(
-    'PowerShell\Microsoft.VSCode_profile.ps1',
-    'PowerShell\Microsoft.PowerShell_profile.ps1',
-    'WindowsPowerShell\Microsoft.PowerShell_profile.ps1'
-  )
   $Documents = [System.Environment]::GetFolderPath('MyDocuments')
   $DotfilesProfile = Join-Path -Path "$PWD" -ChildPath "powershell/profile.ps1"
 
@@ -82,12 +86,18 @@ Task _NvimPlugInstall {
   Exec { nvim --headless -c 'PlugInstall' -c 'q' -c 'q' }
 }
 
-Task _NvimInit {
+Task _NvimConfigDir {
+  if (!(Test-Path "$NvimConfigDir")) {
+    New-Item -Path "$NvimConfigDir" -ItemType Directory
+  }
+}
+
+Task _NvimInit -Depends _NvimConfigDir {
   $VimConfig = @"
 package.path = package.path .. ";$($PWD -replace '\\', '/')/nvim/init.lua"
 require('nvim')
 "@
-  Set-Content -Path "$env:LOCALAPPDATA/nvim/init.lua" -Value $VimConfig
+  Set-Content -Path "$NvimConfigDir/init.lua" -Value $VimConfig
 }
 
 Task Neovim -Depends _NvimInit,_NvimPluggedInstall,_NvimPlugInstall
