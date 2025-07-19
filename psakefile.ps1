@@ -1,5 +1,6 @@
 properties {
   $NvimConfigDir = "$env:LOCALAPPDATA/nvim"
+  $NvimConfig = Get-Content -Path "$PWD/nvim/install.lua"
   $ProfilePaths = @(
     'PowerShell\Microsoft.VSCode_profile.ps1',
     'PowerShell\Microsoft.PowerShell_profile.ps1',
@@ -18,13 +19,26 @@ Task IsAdmin {
 }
 
 ###
+# Environment Variables
+###
+Task EnvVars {
+  [System.Environment]::SetEnvironmentVariable("DotfilesPath", "$PWD", "User")
+  $env:DotfilesPath = $PWD
+}
+
+###
 # Winget Apps
 ###
 Task WingetInstall {
+  Import-Module Microsoft.WinGet.Client
   $Apps = Get-Content "setup/wingetapps.txt"
 
   foreach($App in $Apps) {
+    # Skip if commented out
     if ($App -like "#*" -or $App -eq "") { continue; }
+    # Skip if already installed
+    if (Get-WinGetPackage -Id $App) { continue; }
+
     Exec { winget install $App --silent --accept-package-agreements }
   }
 }
@@ -32,7 +46,7 @@ Task WingetInstall {
 ###
 # PowerShell setup
 ###
-Task PSModules -Depends IsPS7,IsAdmin {
+Task PSModules -Precondition { IsPS7 -and IsAdmin } {
   # Installs modules to all users because PowerShell still doesn't have a way to store modules
   # outside of the MyDocuments folder which gets screwed up when MyDocuments points to a
   # OneDrive folder syncing with other computers.
@@ -54,11 +68,14 @@ Task PSModules -Depends IsPS7,IsAdmin {
 
 Task PowerShell {
   $Documents = [System.Environment]::GetFolderPath('MyDocuments')
-  $DotfilesProfile = Join-Path -Path "$PWD" -ChildPath "powershell/profile.ps1"
+  $DotfilesProfile = '$env:DotfilesPath/powershell/profile.ps1'
 
   New-Item -Path (Join-Path -Path "$Documents" -ChildPath "PowerShell") -ItemType Directory -ErrorAction SilentlyContinue
   New-Item -Path (Join-Path -Path "$Documents" -ChildPath "WindowsPowerShell") -ItemType Directory -ErrorAction SilentlyContinue
+  $ProfileString = '. $env:DotfilesPath/powershell/profile.ps1'
   foreach($ProfilePath in $ProfilePaths) {
+    $ProfilePath = Join-Path -Path "$Documents" -ChildPath "$ProfilePath"
+    if ((Get-Content $ProfilePath) -contains "$ProfileString") { continue; }
     Add-Content -Path (Join-Path -Path "$Documents" -ChildPath "$ProfilePath") -Value ". $DotfilesProfile"
   }
 }
@@ -86,18 +103,12 @@ Task _NvimPlugInstall {
   Exec { nvim --headless -c 'PlugInstall' -c 'q' -c 'q' }
 }
 
-Task _NvimConfigDir {
-  if (!(Test-Path "$NvimConfigDir")) {
-    New-Item -Path "$NvimConfigDir" -ItemType Directory
-  }
+Task _NvimConfigDir -Precondition { !(Test-Path -Path "$NvimConfigDir") } {
+  New-Item -Path "$NvimConfigDir" -ItemType Directory
 }
 
-Task _NvimInit -Depends _NvimConfigDir {
-  $VimConfig = @"
-package.path = package.path .. ";$($PWD -replace '\\', '/')/nvim/init.lua"
-require('nvim')
-"@
-  Set-Content -Path "$NvimConfigDir/init.lua" -Value $VimConfig
+Task _NvimInit -Depends _NvimConfigDir -PreCondition { (Get-Content "$NvimConfigDir/init.lua") -notcontains "$NvimConfig" }{
+  Set-Content -Path "$NvimConfigDir/init.lua" -Value $NvimConfig
 }
 
 Task Neovim -Depends _NvimInit,_NvimPluggedInstall,_NvimPlugInstall
@@ -122,5 +133,5 @@ Task Git {
   Add-Content -Path ~/.gitconfig -Value $GitConfig
 }
 
-Task default -Depends WingetInstall, Neovim, PowerShell, VSCode, AHK, Git
+Task default -Depends EnvVars, Powershell, WingetInstall, Neovim, VSCode, AHK, Git
 Task AdminInstall -Depends PSModules

@@ -1,14 +1,14 @@
 # Media
-Spotify.Spotify
+#Spotify.Spotify
 VideoLAN.VLC
 
 # Productivity
-Microsoft.Office
+#Microsoft.Office
 
 # Communication
-Discord.Discord
+#Discord.Discord
 SlackTechnologies.Slack
-WhatsApp.WhatsApp
+#WhatsApp.WhatsApp
 
 # Tools
 7zip.7zip
@@ -16,10 +16,10 @@ AutoHotkey.AutoHotkey
 Bitwarden.Bitwarden
 Bitwarden.CLI
 BornToBeRoot.NETworkManager
-CPUID.CPU-Z
+#CPUID.CPU-Z
 gerardog.gsudo
 Git.Git
-Insecure.Nmap
+#Insecure.Nmap
 Microsoft.PowerShell
 Microsoft.PowerToys
 Microsoft.Sysinternals.Autoruns
@@ -28,17 +28,17 @@ Microsoft.Sysinternals.ProcessMonitor
 Microsoft.VisualStudioCode
 Mobatek.MobaXterm
 Neovim.Neovim
-Ookla.Speedtest
+#Ookla.Speedtest
 SonicWall.NetExtender
 Splashtop.SplashtopBusiness
 Starship.Starship
-WiresharkFoundation.Wireshark
+#WiresharkFoundation.Wireshark
 
 # Gaming
-EpicGames.EpicGamesLauncher
-Valve.Steam
+#EpicGames.EpicGamesLauncher
+#Valve.Steam
 
 # 3D Printing
-OpenSCAD.OpenSCAD
-PTRTECH.UVtools
-SoftFever.OrcaSlicer
+#OpenSCAD.OpenSCAD
+#PTRTECH.UVtools
+#SoftFever.OrcaSlicer
