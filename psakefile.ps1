@@ -37,7 +37,7 @@ Task WingetInstall {
     # Skip if commented out
     if ($App -like "#*" -or $App -eq "") { continue; }
     # Skip if already installed
-    if (Get-WinGetPackage -Id $App) { continue; }
+    if (Get-WinGetPackage -Id $App) { Write-Output "$App already installed"; continue; }
 
     Exec { winget install $App --silent --accept-package-agreements }
   }
