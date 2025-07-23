@@ -6,9 +6,9 @@ VideoLAN.VLC
 Microsoft.Office
 
 # Communication
-Discord.Discord
+# Discord.Discord
 SlackTechnologies.Slack
-WhatsApp.WhatsApp
+# WhatsApp.WhatsApp
 
 # Tools
 7zip.7zip
@@ -19,7 +19,9 @@ BornToBeRoot.NETworkManager
 CPUID.CPU-Z
 gerardog.gsudo
 Git.Git
-Insecure.Nmap
+Greenshot.Greenshot
+HTTPToolKit.HTTPToolKit
+# Insecure.Nmap
 Microsoft.PowerShell
 Microsoft.PowerToys
 Microsoft.Sysinternals.Autoruns
@@ -28,11 +30,12 @@ Microsoft.Sysinternals.ProcessMonitor
 Microsoft.VisualStudioCode
 Mobatek.MobaXterm
 Neovim.Neovim
-Ookla.Speedtest
+Ookla.Speedtest.CLI
+Ookla.Speedtest.Desktop
 SonicWall.NetExtender
 Splashtop.SplashtopBusiness
 Starship.Starship
-WiresharkFoundation.Wireshark
+# WiresharkFoundation.Wireshark
 
 # Programming
 OpenJS.NodeJS
