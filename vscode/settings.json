@@ -1,0 +1,19 @@
+{
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "vim.handleKeys": {
+    "<C-d>": true,
+    "<C-s>": false,
+    "<C-z>": false,
+    "<C-p>": false
+  },
+  "vim.useSystemClipboard": true,
+  "editor.tabSize": 2
+}
