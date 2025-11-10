@@ -1,4 +1,6 @@
-﻿; :shrug: ¯\_(ツ)_/¯
+﻿#Requires AutoHotkey v2.0
+
+; :shrug: ¯\_(ツ)_/¯
 :*:`:shrug`:::`¯\_(ツ)_/`¯
 
 ; :whatever: ◔_◔

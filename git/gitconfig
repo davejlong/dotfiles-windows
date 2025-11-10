@@ -3,3 +3,5 @@
 [user]
 	name = Dave Long
 	email = dlong@cagedata.com
+[http]
+  sslBackend = schannel
